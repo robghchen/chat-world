@@ -34,7 +34,9 @@ body {
   height: 1em;
 }
 
-#new-message input:focus {
+#new-message input:focus,
+#sign-in:focus,
+#sign-out:focus {
   outline: none;
 }
 
@@ -50,4 +52,15 @@ body {
 
 #sidebar ul {
   list-style-type: none;
+}
+
+#sign-in,
+#sign-out {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  padding: 0.5em;
+  border-radius: 3em;
+  font-size: 1em;
+  color: lightskyblue;
 }
