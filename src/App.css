@@ -1,33 +1,53 @@
-.App {
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Calibri");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: "Calibri";
+}
+#container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "sidebar main";
+  width: 100vw;
+  height: 100vh;
+}
+#main {
+  grid-area: main;
+}
+#new-message {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 1em;
+  margin-left: 0px;
+  border-top: 1px solid lightgrey;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+#new-message input {
+  font-size: 1em;
+  border: none;
+  width: 100%;
+  height: 1em;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#new-message input:focus {
+  outline: none;
 }
 
-.App-link {
-  color: #61dafb;
+#messages-list {
+  padding: 1em 0 0 1em;
+}
+#sidebar {
+  grid-area: sidebar;
+  padding: 1em;
+  border-right: 1.5px solid lightgrey;
+  height: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#sidebar ul {
+  list-style-type: none;
 }
