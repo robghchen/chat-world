@@ -1,20 +1,30 @@
 import React from "react";
 
-const SignButton = ({ userSession }) =>
+import { userSession } from "../utils/constants";
+
+const SignButton = props =>
   userSession.isUserSignedIn() ? (
-    <button id="sign-out" onClick={() => handleSignOut(userSession)}>
+    <button
+      id="sign-out"
+      className="pointer"
+      onClick={handleSignOut}
+    >
       <strong>Sign Out</strong>
     </button>
   ) : (
-    <button id="sign-in" onClick={() => handleSignIn(userSession)}>
+    <button
+      id="sign-in"
+      className="pointer"
+      onClick={handleSignIn}
+    >
       <strong>Sign In</strong>
     </button>
   );
 
-const handleSignIn = userSession => {
+const handleSignIn = () => {
   userSession.redirectToSignIn();
 };
-const handleSignOut = userSession => {
+const handleSignOut = () => {
   userSession.signUserOut();
   window.location = "/";
 };
