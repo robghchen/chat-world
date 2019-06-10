@@ -5,6 +5,7 @@
   "dependencies": {
     "blockstack": "^19.0.0-alpha.2",
     "chance": "^1.0.18",
+    "google-translate": "^2.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
