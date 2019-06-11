@@ -18,6 +18,8 @@ class App extends Component {
       }
       window.location = "/";
     }
+
+
   };
 
   render() {

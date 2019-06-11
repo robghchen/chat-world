@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import { addUser, messageReceived, populateUsersList } from "../actions";
+import { cookies } from "../utils/cookies";
 
 const setupSocket = (dispatch, username) => {
   const socket = new WebSocket("ws://localhost:8989");
@@ -20,7 +21,7 @@ const setupSocket = (dispatch, username) => {
 
     switch (data.type) {
       case types.ADD_MESSAGE:
-        googleTranslate.translate(msg, "es", function(err, translation) {
+        googleTranslate.translate(msg, cookies.get("language"), function(err, translation) {
           msg = translation.translatedText;
           dispatch(messageReceived(msg, data.author));
         });
@@ -38,4 +39,4 @@ const setupSocket = (dispatch, username) => {
   return socket;
 };
 
-export default setupSocket;
+export default setupSocket

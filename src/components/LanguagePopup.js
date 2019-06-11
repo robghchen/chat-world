@@ -8,10 +8,7 @@ const LanguagePopup = props => (
       className="select-language"
       name="language"
       value={props.language}
-      onChange={
-        // console.log(props)
-        e => props.dispatch(e.target.value)
-      }
+      onChange={e => props.dispatch(e.target.value)}
     >
       <option value="en">English</option>
       <option value="es">Spanish</option>
