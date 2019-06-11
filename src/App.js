@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import { userSession } from "./utils/constants";
+import { userSession } from "./utils/blockstack";
 import "./App.css";
 import { Sidebar } from "./containers/Sidebar";
 import { MessagesList } from "./containers/MessagesList";
 import { AddMessage } from "./containers/AddMessage";
+import { LanguagePopup } from "./containers/LanguagePopup";
 import SignButton from "./components/SignButton";
 
 class App extends Component {
@@ -19,10 +21,12 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.props.language);
     return (
       <div id="container">
         <Sidebar />
         <SignButton />
+        <LanguagePopup />
         <section id="main">
           <MessagesList />
           <AddMessage />
@@ -32,4 +36,9 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+  state => ({
+    language: state.language
+  }),
+  {}
+)(App);

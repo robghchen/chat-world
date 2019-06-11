@@ -27,3 +27,8 @@ export const populateUsersList = users => ({
   type: types.USERS_LIST,
   users
 });
+
+export const changeLanguage = language => ({
+  type: types.CHANGE_LANGUAGE,
+  language
+})

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { userSession } from "../utils/constants";
+import { userSession } from "../utils/blockstack";
 
 const SignButton = props =>
   userSession.isUserSignedIn() ? (
