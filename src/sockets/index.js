@@ -1,6 +1,7 @@
 import * as types from "../constants/ActionTypes";
 import { addUser, messageReceived, populateUsersList } from "../actions";
 import { cookies } from "../utils/cookies";
+import { googleTranslate } from "../utils/googleTranslate";
 
 const setupSocket = (dispatch, username) => {
   const socket = new WebSocket("ws://localhost:8989");
@@ -15,16 +16,24 @@ const setupSocket = (dispatch, username) => {
   };
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
-    const apiKey = process.env.REACT_APP_GOOGLE_TRANSLATE_API_KEY;
-    let googleTranslate = require("google-translate")(apiKey);
     let msg = data.message ? data.message : "";
 
     switch (data.type) {
       case types.ADD_MESSAGE:
-        googleTranslate.translate(msg, cookies.get("language"), function(err, translation) {
-          msg = translation.translatedText;
-          dispatch(messageReceived(msg, data.author));
+        googleTranslate.detectLanguage(msg, function(err, detection) {
+          if (detection.language !== cookies.get("language")) {
+            googleTranslate.translate(msg, cookies.get("language"), function(
+              err,
+              translation
+            ) {
+              msg = translation.translatedText;
+              dispatch(messageReceived(msg, data.author));
+            });
+          } else {
+            dispatch(messageReceived(msg, data.author));
+          }
         });
+
         break;
       case types.ADD_USER:
         dispatch(addUser(data.name));
@@ -39,4 +48,4 @@ const setupSocket = (dispatch, username) => {
   return socket;
 };
 
-export default setupSocket
+export default setupSocket;
