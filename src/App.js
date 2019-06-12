@@ -18,12 +18,9 @@ class App extends Component {
       }
       window.location = "/";
     }
-
-
   };
 
   render() {
-    console.log(this.props.language);
     return (
       <div id="container">
         <Sidebar />
