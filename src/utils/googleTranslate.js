@@ -21,3 +21,17 @@ export const translate = str => {
     this.setState({ str });
   };
 };
+
+export const compDidUp = (str, translating) => {
+  googleTranslate.detectLanguage(str, function(err, detection) {
+    if (detection.language !== cookies.get("language")) {
+      googleTranslate.translate(str, cookies.get("language"), function(
+        err,
+        translation
+      ) {
+        str = translation.translatedText;
+        translating(str);
+      });
+    }
+  });
+};

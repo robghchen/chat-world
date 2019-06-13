@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import {
-  googleTranslate,
-  maybeTranslate,
-  translate
-} from "../utils/googleTranslate";
+import { googleTranslate, compDidUp } from "../utils/googleTranslate";
 import { cookies } from "../utils/cookies";
+import { parse } from "querystring";
 
 class LanguagePopup extends Component {
   state = {
@@ -24,27 +21,16 @@ class LanguagePopup extends Component {
     };
   }
 
-  componentDidUpdate() {
-    let { str } = this.state;
+  // componentDidUpdate() {
+  //   let { str } = this.state;
+  //   const translating = tranStr => {
+  //     if (str !== tranStr) {
+  //       this.setState({ str: tranStr });
+  //     }
+  //   };
 
-    googleTranslate.detectLanguage(str, function(err, detection) {
-      if (detection.language !== cookies.get("language")) {
-        googleTranslate.translate(str, cookies.get("language"), function(
-          err,
-          translation
-        ) {
-          str = translation.translatedText;
-          translating(str);
-        });
-      }
-    });
-
-    const translating = str => {
-      if (str !== this.state.str) {
-        this.setState({ str });
-      }
-    };
-  }
+  //   compDidUp(str, translating);
+  // }
 
   render() {
     const { languageCodes, str } = this.state;
