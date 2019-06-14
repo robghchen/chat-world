@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import LanguagePopupComponent from "../components/LanguagePopup";
 import { changeLanguage } from "../actions";
-import { cookies } from "../utils/cookies";
+import  cookie  from "react-cookies";
 
 const mapDispatchToProps = dispatch => ({
   dispatch: language => {
-    cookies.set("language", language, { path: "/" });
+    cookie.save("language", language, { path: "/" });
     dispatch(changeLanguage(language));
   }
 });

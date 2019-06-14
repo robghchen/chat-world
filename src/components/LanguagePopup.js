@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { googleTranslate, compDidUp } from "../utils/googleTranslate";
-import { cookies } from "../utils/cookies";
+import cookie from "react-cookies";
 import { parse } from "querystring";
 
 class LanguagePopup extends Component {

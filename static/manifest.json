@@ -1,0 +1,12 @@
+{
+  "name": "Chat World",
+  "start_url": "localhost:5000",
+  "description": "Realtime text translation chat app to overcome language barriers",
+  "icons": [
+    {
+      "src": "https://helloblockstack.com/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

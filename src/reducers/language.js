@@ -1,11 +1,11 @@
 import * as types from "../constants/ActionTypes";
-import { cookies } from "../utils/cookies";
+import  cookie  from "react-cookies";
 
 if (!cookies.get("language")) {
   cookies.set("language", "en", { path: "/" });
 }
 
-const language = (state = cookies.get("language"), action) => {
+const language = (state = cookie.load("language"), action) => {
   switch (action.type) {
     case types.CHANGE_LANGUAGE:
       return action.language;
