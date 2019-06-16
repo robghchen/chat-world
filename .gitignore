@@ -3,3 +3,4 @@ node_modules
 .next
 
 src/utils/translate.js
+src/utils/name.js
