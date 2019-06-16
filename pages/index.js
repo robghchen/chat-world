@@ -7,7 +7,7 @@ import translate from "translate";
 import Text from "../styled/typography";
 import Message from "../models/Message";
 import Feed from "../src/components/Feed";
-import {apiKey} from '../src/utils/translate'
+import { apiKey } from "../config";
 
 class Home extends React.Component {
   static propTypes = {
@@ -37,6 +37,7 @@ class Home extends React.Component {
   }
 
   async componentDidMount() {
+    console.log(apiKey);
     const { userSession } = getConfig();
     if (userSession.isUserSignedIn()) {
       const currentUser = userSession.loadUserData();

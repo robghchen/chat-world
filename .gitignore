@@ -1,6 +1,5 @@
+config.js
+
 node_modules
 .env
 .next
-
-src/utils/translate.js
-src/utils/name.js
