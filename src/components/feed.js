@@ -2,10 +2,11 @@ import React from "react";
 import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User } from "radiks";
+import translate from "translate";
 
-import Text from "../styled/typography";
-import Input from "../styled/input";
-import Message from "../models/Message";
+import Text from "../../styled/typography";
+import Input from "../../styled/input";
+import Message from "../../models/Message";
 
 export default class Feed extends React.Component {
   static propTypes = {
@@ -20,7 +21,29 @@ export default class Feed extends React.Component {
     newMessage: "",
     createdMessageIDs: {},
     messages: [],
-    currentUser: null
+    currentUser: null,
+    languageCodes: [
+      { code: "ar", language: "Arabic" },
+      { code: "zh", language: "Chinese" },
+      { code: "en", language: "English" },
+      { code: "tl", language: "Filipino" },
+      { code: "fr", language: "French" },
+      { code: "de", language: "German" },
+      { code: "iw", language: "Hebrew" },
+      { code: "hi", language: "Hindi" },
+      { code: "ga", language: "Irish" },
+      { code: "it", language: "Italian" },
+      { code: "ja", language: "Japanese" },
+      { code: "ko", language: "Korean" },
+      { code: "ms", language: "Malay" },
+      { code: "pt", language: "Portuguese" },
+      { code: "ro", language: "Romanian" },
+      { code: "ru", language: "Russian" },
+      { code: "so", language: "Somali" },
+      { code: "es", language: "Spanish" },
+      { code: "th", language: "Thai" },
+      { code: "vi", language: "Vietnamese" }
+    ]
   };
 
   componentWillMount() {

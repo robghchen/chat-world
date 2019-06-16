@@ -11,7 +11,6 @@
     "express": "^4.16.3",
     "express-ws": "^4.0.0",
     "fs": "^0.0.1-security",
-    "google-translate": "^2.2.0",
     "grid-styled": "^5.0.2",
     "moment": "^2.22.2",
     "net": "^1.0.2",
@@ -26,7 +25,8 @@
     "rebass": "^2.3.4",
     "styled-components": "^3.4.9",
     "styled-system": "^3.1.6",
-    "tls": "0.0.1"
+    "tls": "0.0.1",
+    "translate": "^1.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

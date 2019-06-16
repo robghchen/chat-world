@@ -2,10 +2,12 @@ import React from "react";
 import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User, getConfig } from "radiks";
+import translate from "translate";
 
 import Text from "../styled/typography";
 import Message from "../models/Message";
-import Feed from "../components/feed";
+import Feed from "../src/components/Feed";
+import {apiKey} from '../src/utils/translate'
 
 class Home extends React.Component {
   static propTypes = {
@@ -17,14 +19,15 @@ class Home extends React.Component {
   };
 
   state = {
-    currentUser: null
+    currentUser: null,
+    title: ""
   };
 
   static async getInitialProps() {
     const messages = await Message.fetchList(
       {
         sort: "createdAt",
-        limit: 10,
+        limit: 10
       },
       { decrypt: false }
     );
@@ -43,6 +46,13 @@ class Home extends React.Component {
       await User.createWithCurrentUser();
       this.setState({ currentUser });
     }
+
+    const title = await translate("Chat World", {
+      to: "es",
+      key: apiKey
+    });
+
+    this.setState({ title });
   }
 
   login = () => {
@@ -59,12 +69,12 @@ class Home extends React.Component {
   };
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, title } = this.state;
     return (
       <>
         <Flex>
           <Box width={[1, 3 / 4]} mx="auto">
-            <Text.h1 textAlign="center">Chat World</Text.h1>
+            <Text.h1 textAlign="center">{title}</Text.h1>
             {currentUser ? (
               <>
                 <Text.small textAlign="center" display="block">

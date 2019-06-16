@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { userSession, appConfig } from '../utils/blockstack';
+import { userSession, appConfig } from '../src/utils/blockstack';
 import { configure } from 'radiks';
 
 class MyApp extends App {
