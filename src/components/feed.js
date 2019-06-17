@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import { User } from "radiks";
 import translate from "translate";
 
+import SelectLanguage from "./SelectLanguage";
+
+import { langCodes } from "../utils/translate";
+
 import Text from "../../styled/typography";
 import Input from "../../styled/input";
 import Message from "../../models/Message";
@@ -22,28 +26,7 @@ export default class Feed extends React.Component {
     createdMessageIDs: {},
     messages: [],
     currentUser: null,
-    languageCodes: [
-      { code: "ar", language: "Arabic" },
-      { code: "zh", language: "Chinese" },
-      { code: "en", language: "English" },
-      { code: "tl", language: "Filipino" },
-      { code: "fr", language: "French" },
-      { code: "de", language: "German" },
-      { code: "iw", language: "Hebrew" },
-      { code: "hi", language: "Hindi" },
-      { code: "ga", language: "Irish" },
-      { code: "it", language: "Italian" },
-      { code: "ja", language: "Japanese" },
-      { code: "ko", language: "Korean" },
-      { code: "ms", language: "Malay" },
-      { code: "pt", language: "Portuguese" },
-      { code: "ro", language: "Romanian" },
-      { code: "ru", language: "Russian" },
-      { code: "so", language: "Somali" },
-      { code: "es", language: "Spanish" },
-      { code: "th", language: "Thai" },
-      { code: "vi", language: "Vietnamese" }
-    ]
+    languageCodes: langCodes
   };
 
   componentWillMount() {
@@ -87,9 +70,14 @@ export default class Feed extends React.Component {
     return this.state.messages.map(message => (
       <div key={message._id}>
         <Text.p mt={4} mb={1}>
-          {message.attrs.createdBy} says:
+          {message.attrs.createdBy.slice(
+            -14,
+            message.attrs.createdBy.length
+          ) === ".id.blockstack"
+            ? message.attrs.createdBy.slice(0, -14)
+            : message.attrs.createdBy}
+          : {message.attrs.content}
         </Text.p>
-        <Text.em>{message.attrs.content}</Text.em>
       </div>
     ));
   }
@@ -105,6 +93,8 @@ export default class Feed extends React.Component {
           {/* <Text.p textAlign="center">
             Only showing the most recent {this.state.messages.length} messages.
           </Text.p> */}
+
+          <SelectLanguage />
 
           <Input
             mt={3}

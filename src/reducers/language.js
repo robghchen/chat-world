@@ -1,8 +1,8 @@
 import * as types from "../constants/ActionTypes";
 import  cookie  from "react-cookies";
 
-if (!cookies.get("language")) {
-  cookies.set("language", "en", { path: "/" });
+if (!cookie.load("language")) {
+  cookie.save("language", "en", { path: "/" });
 }
 
 const language = (state = cookie.load("language"), action) => {
@@ -13,4 +13,5 @@ const language = (state = cookie.load("language"), action) => {
       return state;
   }
 };
+
 export default language;

@@ -7,7 +7,7 @@ import translate from "translate";
 import Text from "../styled/typography";
 import Message from "../models/Message";
 import Feed from "../src/components/Feed";
-import { apiKey } from "../config";
+import { apiKey, languageCodes } from "../src/utils/translate";
 
 class Home extends React.Component {
   static propTypes = {
@@ -26,18 +26,18 @@ class Home extends React.Component {
   static async getInitialProps() {
     const messages = await Message.fetchList(
       {
-        sort: "createdAt",
+        sort: "-createdAt",
         limit: 10
       },
       { decrypt: false }
     );
+
     return {
       messages
     };
   }
 
   async componentDidMount() {
-    console.log(apiKey);
     const { userSession } = getConfig();
     if (userSession.isUserSignedIn()) {
       const currentUser = userSession.loadUserData();
@@ -48,12 +48,12 @@ class Home extends React.Component {
       this.setState({ currentUser });
     }
 
-    const title = await translate("Chat World", {
-      to: "es",
-      key: apiKey
-    });
+    // const title = await translate("Chat World", {
+    //   to: "es",
+    //   key: apiKey
+    // });
 
-    this.setState({ title });
+    // this.setState({ title });
   }
 
   login = () => {
@@ -85,7 +85,7 @@ class Home extends React.Component {
                     Log Out
                   </a>
                 </Text.small>
-                <Feed messages={this.props.messages} />
+                <Feed messages={this.props.messages.reverse()} />
               </>
             ) : (
               <>

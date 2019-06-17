@@ -1,7 +1,7 @@
-import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-import { injectGlobal, ServerStyleSheet } from 'styled-components';
-import { normalize } from 'polished';
+import React from "react";
+import Document, { Head, Main, NextScript } from "next/document";
+import { injectGlobal, ServerStyleSheet } from "styled-components";
+import { normalize } from "polished";
 
 // import theme from '../styled/theme';
 
