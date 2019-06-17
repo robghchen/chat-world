@@ -20,16 +20,14 @@ class Home extends React.Component {
   };
 
   state = {
-    currentUser: null,
-    title: "",
-    language: cookie.load("language")
+    currentUser: null
   };
 
   static async getInitialProps() {
     const messages = await Message.fetchList(
       {
         sort: "-createdAt",
-        limit: 1
+        limit: 5
       },
       { decrypt: false }
     );
@@ -49,16 +47,6 @@ class Home extends React.Component {
       await User.createWithCurrentUser();
       this.setState({ currentUser });
     }
-
-    const { language } = this.state;
-    console.log("index.js", language);
-
-    const title = await translate("Chat World", {
-      to: language,
-      key: apiKey
-    });
-
-    this.setState({ title });
   }
 
   login = () => {
@@ -74,22 +62,13 @@ class Home extends React.Component {
     });
   };
 
-  changeLanguage = language => {
-    translate("Chat World", {
-      to: language,
-      key: apiKey
-    }).then(title => {
-      this.setState({ title, language });
-    });
-  };
-
   render() {
     const { currentUser, title } = this.state;
     return (
       <>
         <Flex>
           <Box width={[1, 3 / 4]} mx="auto">
-            <Text.h1 textAlign="center">{title}</Text.h1>
+            <Text.h1 textAlign="center">Chat World</Text.h1>
             {currentUser ? (
               <>
                 <Text.small textAlign="center" display="block">
@@ -99,10 +78,7 @@ class Home extends React.Component {
                     Log Out
                   </a>
                 </Text.small>
-                <Feed
-                  messages={this.props.messages.reverse()}
-                  changeLanguage={this.changeLanguage}
-                />
+                <Feed messages={this.props.messages.reverse()} />
               </>
             ) : (
               <>

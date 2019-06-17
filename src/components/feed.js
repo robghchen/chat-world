@@ -32,11 +32,31 @@ export default class Feed extends React.Component {
   };
 
   componentWillMount() {
+    const { language } = this.state;
     const rawMessages = this.props.messages;
-    const messages = rawMessages.map(
-      messageData => new Message(messageData.attrs)
-    );
+    const messages = rawMessages.map(message => {
+      return new Message(message.attrs);
+    });
     this.setState({ messages });
+  }
+
+  async translateMessage(message) {
+    const { language } = this.state;
+
+    if (
+      message.attrs.language !== language &&
+      !message.attrs.translation[language]
+    ) {
+      message.attrs.translation[language] = await translate(
+        message.attrs.content,
+        {
+          from: message.attrs.language,
+          to: language,
+          key: apiKey
+        }
+      );
+      message.save();
+    }
   }
 
   componentDidMount() {
@@ -62,18 +82,22 @@ export default class Feed extends React.Component {
           key: apiKey
         }
       );
-      message.save();
+      await message.save();
+      await this.pushMessage(message);
     }
+  }
 
+  pushMessage = message => {
     const { messages } = this.state;
+
     if (!this.state.createdMessageIDs[message._id]) {
       messages.push(message);
       this.setState({ messages });
     }
-  }
+  };
 
   async submit() {
-    const { newMessage } = this.state;
+    const { newMessage, language } = this.state;
     const message = new Message({
       content: newMessage,
       createdBy: this.state.currentUser._id,
@@ -108,8 +132,6 @@ export default class Feed extends React.Component {
   }
 
   changeLanguage = language => {
-    this.props.changeLanguage(language);
-
     this.setState({ language });
   };
 
