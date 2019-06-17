@@ -127,10 +127,10 @@ export default class Feed extends React.Component {
       let author = message.attrs.createdBy;
       return (
         <div key={message._id}>
-          <Text.p mt={4} mb={1}>
+          <Text.p mt={4} mb={1}><strong>
             {author.slice(-14, author.length) === ".id.blockstack"
               ? author.slice(0, -14)
-              : author}
+              : author}</strong>
             :{" "}
             {message.attrs.translation[language]
               ? message.attrs.translation[language]

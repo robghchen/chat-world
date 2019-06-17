@@ -2,13 +2,10 @@ import React from "react";
 import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User, getConfig } from "radiks";
-import translate from "translate";
-import cookie from "react-cookies";
 
 import Text from "../styled/typography";
 import Message from "../models/Message";
 import Feed from "../src/components/Feed";
-import { apiKey, languageCodes } from "../src/utils/translate";
 
 class Home extends React.Component {
   static propTypes = {
@@ -63,7 +60,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { currentUser, title } = this.state;
+    const { currentUser } = this.state;
     return (
       <>
         <Flex>
@@ -86,18 +83,62 @@ class Home extends React.Component {
               </>
             ) : (
               <>
-                <Text.p textAlign="center">
-                  Log in with Blockstack to get started.
-                </Text.p>
-
-                <Button
-                  mt={3}
-                  onClick={this.login}
-                  mx="auto"
-                  style={{ display: "block" }}
+                <div
+                  alt="banner"
+                  style={{
+                    backgroundImage:
+                      'url("https://1.bp.blogspot.com/-4f6FJ6qKOq4/XKRZY0BVxCI/AAAAAAAABS8/lq3RXjvKLiMYQ5O5KhdVfYYcNVQeKU1EACLcBGAs/s1600/cursos-de-ingles-en-el-extranjero.jpg")',
+                    minWidth: "100vw",
+                    minHeight: "50vh",
+                    position: "absolute",
+                    top: "0em",
+                    left: "0em",
+                    display: "flex"
+                  }}
                 >
-                  Log In
-                </Button>
+                  <div
+                    style={{
+                      margin: "auto",
+                      color: "white",
+                      padding: "2em",
+                      borderRadius: "2em",
+                      backgroundColor: "rgba(0,0,0,0.5"
+                    }}
+                  >
+                    <h1 style={{ textAlign: "center" }}>Chat World</h1>
+                    <h2>
+                      Real-time text translation chat app to overcome language
+                      barriers
+                    </h2>
+
+                    <Button
+                      mt={3}
+                      onClick={this.login}
+                      mx="auto"
+                      style={{
+                        display: "block",
+                        padding: "0.7em",
+                        borderRadius: "0.6em",
+                        fontSize: "1.5em",
+                        cursor: "pointer"
+                      }}
+                    >
+                      Log In
+                    </Button>
+                  </div>
+
+                  <img
+                    src="https://i.ibb.co/R4czc1w/2019-06-12-15-00-11.gif"
+                    alt="demo"
+                    style={{
+                      maxWidth: "100vw",
+                      minHeight: "50vh",
+                      position: "absolute",
+                      marginTop: "50vh",
+                      left: "0em"
+                    }}
+                  />
+                </div>
               </>
             )}
           </Box>
