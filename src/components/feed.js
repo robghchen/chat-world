@@ -29,10 +29,10 @@ export default class Feed extends React.Component {
     currentUser: null,
     languageCodes: langCodes,
     language: cookie.load("language")
+    // translated: false
   };
 
   componentWillMount() {
-    const { language } = this.state;
     const rawMessages = this.props.messages;
     const messages = rawMessages.map(message => {
       return new Message(message.attrs);
@@ -40,32 +40,41 @@ export default class Feed extends React.Component {
     this.setState({ messages });
   }
 
-  async translateMessage(message) {
-    const { language } = this.state;
-
-    if (
-      message.attrs.language !== language &&
-      !message.attrs.translation[language]
-    ) {
-      message.attrs.translation[language] = await translate(
-        message.attrs.content,
-        {
-          from: message.attrs.language,
-          to: language,
-          key: apiKey
-        }
-      );
-      message.save();
-    }
-  }
-
   componentDidMount() {
+    // const { translated } = this.state;
+    const { messages } = this.props;
+
     this.setState({
       currentUser: User.currentUser()
     });
 
+    // if (!translated) {
+    //   console.log("translating");
+    //   this.setState({ translated: true });
+    //   messages.forEach(message => this.translateMessage(message));
+    // }
+
     Message.addStreamListener(this.newMessageListener.bind(this));
   }
+
+  // translateMessage = async message => {
+  //   const { language } = this.state;
+
+  //   if (
+  //     message.attrs.language !== language &&
+  //     !message.attrs.translation[language]
+  //   ) {
+  //     message.attrs.translation[language] = await translate(
+  //       message.attrs.content,
+  //       {
+  //         from: message.attrs.language,
+  //         to: language,
+  //         key: apiKey
+  //       }
+  //     );
+  //     await message.save();
+  //   }
+  // };
 
   async newMessageListener(message) {
     const { language } = this.state;
@@ -83,7 +92,8 @@ export default class Feed extends React.Component {
         }
       );
       await message.save();
-      await this.pushMessage(message);
+    } else {
+      this.pushMessage(message);
     }
   }
 
@@ -152,7 +162,7 @@ export default class Feed extends React.Component {
           <Input
             mt={3}
             width={1}
-            placeholder="What do you have to say?"
+            placeholder="Type a message..."
             value={this.state.newMessage}
             onChange={evt => this.setState({ newMessage: evt.target.value })}
           />
