@@ -162,7 +162,12 @@ export default class Feed extends React.Component {
             width={8 / 10}
             placeholder="Type a message..."
             value={this.state.newMessage}
-            onChange={evt => this.setState({ newMessage: evt.target.value })}
+            onChange={e => this.setState({ newMessage: e.target.value })}
+            onKeyPress={e => {
+              if (e.key === "Enter") {
+                return this.submit();
+              }
+            }}
           />
 
           <SelectLanguage changeLanguage={this.changeLanguage} />
