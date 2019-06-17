@@ -78,7 +78,11 @@ class Home extends React.Component {
                     Log Out
                   </a>
                 </Text.small>
-                <Feed messages={this.props.messages.reverse()} />
+                <Feed
+                  messages={this.props.messages.sort(
+                    (a, b) => a.attrs.createdAt - b.attrs.createdAt
+                  )}
+                />
               </>
             ) : (
               <>
