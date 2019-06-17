@@ -22,9 +22,9 @@ class SelectLanguage extends Component {
     const { languageCodes, language } = this.state;
 
     return (
-      <div>
+      <span style={{ marginTop: "2em" }}>
         <select
-          className="select-language"
+          style={{ height: "2.2em" }}
           value={language}
           onChange={e => this.changeHandler(e.target.value)}
         >
@@ -34,7 +34,7 @@ class SelectLanguage extends Component {
             </option>
           ))}
         </select>
-      </div>
+      </span>
     );
   }
 

@@ -148,7 +148,7 @@ export default class Feed extends React.Component {
   render() {
     return (
       <Flex>
-        <Box width={[1, 1 / 2]} mx="auto" textAlign="center">
+        <Box width={[1, 1]} mx="auto" textAlign="center">
           {/* <Text.p textAlign="center">Create a post:</Text.p> */}
 
           {this.messages()}
@@ -157,17 +157,21 @@ export default class Feed extends React.Component {
             Only showing the most recent {this.state.messages.length} messages.
           </Text.p> */}
 
-          <SelectLanguage changeLanguage={this.changeLanguage} />
-
           <Input
             mt={3}
-            width={1}
+            width={8 / 10}
             placeholder="Type a message..."
             value={this.state.newMessage}
             onChange={evt => this.setState({ newMessage: evt.target.value })}
           />
 
-          <Button onClick={() => this.submit()} mt={2}>
+          <SelectLanguage changeLanguage={this.changeLanguage} />
+
+          <Button
+            style={{ marginTop: "-0.2em", height: "2.5em" }}
+            onClick={() => this.submit()}
+            mt={2}
+          >
             Submit
           </Button>
         </Box>

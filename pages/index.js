@@ -3,12 +3,12 @@ import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User, getConfig } from "radiks";
 import translate from "translate";
+import cookie from "react-cookies";
 
 import Text from "../styled/typography";
 import Message from "../models/Message";
 import Feed from "../src/components/Feed";
 import { apiKey, languageCodes } from "../src/utils/translate";
-import cookie from "react-cookies";
 
 class Home extends React.Component {
   static propTypes = {
@@ -27,7 +27,7 @@ class Home extends React.Component {
     const messages = await Message.fetchList(
       {
         sort: "-createdAt",
-        limit: 5
+        limit: 10
       },
       { decrypt: false }
     );
