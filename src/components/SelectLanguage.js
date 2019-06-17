@@ -29,8 +29,8 @@ class SelectLanguage extends Component {
           onChange={e => this.changeHandler(e.target.value)}
         >
           {languageCodes.map(lang => (
-            <option key={lang.code} value={lang.code}>
-              {lang.language}
+            <option key={lang.language} value={lang.language}>
+              {lang.name}
             </option>
           ))}
         </select>

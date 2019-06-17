@@ -27,7 +27,7 @@ class Home extends React.Component {
     const messages = await Message.fetchList(
       {
         sort: "-createdAt",
-        limit: 10
+        limit: 1
       },
       { decrypt: false }
     );

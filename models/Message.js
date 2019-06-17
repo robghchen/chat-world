@@ -11,6 +11,10 @@ export default class Message extends Model {
     createdBy: {
       type: String,
       decrypted: true
+    },
+    language: {
+      type: String,
+      decrypted: true
     }
   }
 }

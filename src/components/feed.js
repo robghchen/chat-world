@@ -3,10 +3,11 @@ import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User } from "radiks";
 import translate from "translate";
+import cookie from "react-cookies";
 
 import SelectLanguage from "./SelectLanguage";
 
-import { langCodes } from "../utils/translate";
+import { langCodes, apiKey } from "../utils/translate";
 
 import Text from "../../styled/typography";
 import Input from "../../styled/input";
@@ -26,7 +27,8 @@ export default class Feed extends React.Component {
     createdMessageIDs: {},
     messages: [],
     currentUser: null,
-    languageCodes: langCodes
+    languageCodes: langCodes,
+    content: ""
   };
 
   componentWillMount() {
@@ -45,7 +47,15 @@ export default class Feed extends React.Component {
     Message.addStreamListener(this.newMessageListener.bind(this));
   }
 
-  newMessageListener(message) {
+  async newMessageListener(message) {
+    if (message.attrs.language !== cookie.load("language")) {
+      message.attrs.content = await translate(message.attrs.content, {
+        from: message.attrs.language,
+        to: cookie.load("language"),
+        key: apiKey
+      });
+    }
+
     const { messages } = this.state;
     if (!this.state.createdMessageIDs[message._id]) {
       messages.push(message);
@@ -57,7 +67,8 @@ export default class Feed extends React.Component {
     const { newMessage } = this.state;
     const message = new Message({
       content: newMessage,
-      createdBy: this.state.currentUser._id
+      createdBy: this.state.currentUser._id,
+      language: cookie.load("language")
     });
     const { messages, createdMessageIDs } = this.state;
     messages.push(message);
@@ -67,19 +78,19 @@ export default class Feed extends React.Component {
   }
 
   messages() {
-    return this.state.messages.map(message => (
-      <div key={message._id}>
-        <Text.p mt={4} mb={1}>
-          {message.attrs.createdBy.slice(
-            -14,
-            message.attrs.createdBy.length
-          ) === ".id.blockstack"
-            ? message.attrs.createdBy.slice(0, -14)
-            : message.attrs.createdBy}
-          : {message.attrs.content}
-        </Text.p>
-      </div>
-    ));
+    return this.state.messages.map(message => {
+      let author = message.attrs.createdBy;
+      return (
+        <div key={message._id}>
+          <Text.p mt={4} mb={1}>
+            {author.slice(-14, author.length) === ".id.blockstack"
+              ? author.slice(0, -14)
+              : author}
+            : {message.attrs.content}
+          </Text.p>
+        </div>
+      );
+    });
   }
 
   render() {
