@@ -8,6 +8,7 @@ import Text from "../styled/typography";
 import Message from "../models/Message";
 import Feed from "../src/components/Feed";
 import { apiKey, languageCodes } from "../src/utils/translate";
+import cookie from "react-cookies";
 
 class Home extends React.Component {
   static propTypes = {
@@ -20,7 +21,8 @@ class Home extends React.Component {
 
   state = {
     currentUser: null,
-    title: ""
+    title: "",
+    language: cookie.load("language")
   };
 
   static async getInitialProps() {
@@ -48,12 +50,15 @@ class Home extends React.Component {
       this.setState({ currentUser });
     }
 
-    // const title = await translate("Chat World", {
-    //   to: "es",
-    //   key: apiKey
-    // });
+    const { language } = this.state;
+    console.log("index.js", language);
 
-    // this.setState({ title });
+    const title = await translate("Chat World", {
+      to: language,
+      key: apiKey
+    });
+
+    this.setState({ title });
   }
 
   login = () => {
@@ -66,6 +71,15 @@ class Home extends React.Component {
     userSession.signUserOut();
     this.setState({
       currentUser: null
+    });
+  };
+
+  changeLanguage = language => {
+    translate("Chat World", {
+      to: language,
+      key: apiKey
+    }).then(title => {
+      this.setState({ title, language });
     });
   };
 
@@ -85,7 +99,10 @@ class Home extends React.Component {
                     Log Out
                   </a>
                 </Text.small>
-                <Feed messages={this.props.messages.reverse()} />
+                <Feed
+                  messages={this.props.messages.reverse()}
+                  changeLanguage={this.changeLanguage}
+                />
               </>
             ) : (
               <>

@@ -40,10 +40,12 @@ class SelectLanguage extends Component {
 
   changeHandler = languageSelected => {
     const { language } = this.state;
+    const { changeLanguage } = this.props;
 
     if (language !== languageSelected) {
       this.setState({ language: languageSelected });
       cookie.save("language", languageSelected, { path: "/" });
+      changeLanguage(languageSelected);
     }
   };
 }

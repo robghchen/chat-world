@@ -1,8 +1,8 @@
-import { Model } from 'radiks';
+import { Model } from "radiks";
 
 export default class Message extends Model {
-  static className = 'Message'
-  
+  static className = "Message";
+
   static schema = {
     content: {
       type: String,
@@ -15,6 +15,10 @@ export default class Message extends Model {
     language: {
       type: String,
       decrypted: true
+    },
+    translation: {
+      type: Object,
+      decrypted: true
     }
-  }
+  };
 }

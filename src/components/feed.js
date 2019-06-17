@@ -28,7 +28,7 @@ export default class Feed extends React.Component {
     messages: [],
     currentUser: null,
     languageCodes: langCodes,
-    content: ""
+    language: cookie.load("language")
   };
 
   componentWillMount() {
@@ -48,12 +48,21 @@ export default class Feed extends React.Component {
   }
 
   async newMessageListener(message) {
-    if (message.attrs.language !== cookie.load("language")) {
-      message.attrs.content = await translate(message.attrs.content, {
-        from: message.attrs.language,
-        to: cookie.load("language"),
-        key: apiKey
-      });
+    const { language } = this.state;
+
+    if (
+      message.attrs.language !== language &&
+      !message.attrs.translation[language]
+    ) {
+      message.attrs.translation[language] = await translate(
+        message.attrs.content,
+        {
+          from: message.attrs.language,
+          to: language,
+          key: apiKey
+        }
+      );
+      message.save();
     }
 
     const { messages } = this.state;
@@ -68,7 +77,8 @@ export default class Feed extends React.Component {
     const message = new Message({
       content: newMessage,
       createdBy: this.state.currentUser._id,
-      language: cookie.load("language")
+      language: language,
+      translation: {}
     });
     const { messages, createdMessageIDs } = this.state;
     messages.push(message);
@@ -78,6 +88,7 @@ export default class Feed extends React.Component {
   }
 
   messages() {
+    const { language } = this.state;
     return this.state.messages.map(message => {
       let author = message.attrs.createdBy;
       return (
@@ -86,12 +97,21 @@ export default class Feed extends React.Component {
             {author.slice(-14, author.length) === ".id.blockstack"
               ? author.slice(0, -14)
               : author}
-            : {message.attrs.content}
+            :{" "}
+            {message.attrs.translation[language]
+              ? message.attrs.translation[language]
+              : message.attrs.content}
           </Text.p>
         </div>
       );
     });
   }
+
+  changeLanguage = language => {
+    this.props.changeLanguage(language);
+
+    this.setState({ language });
+  };
 
   render() {
     return (
@@ -105,7 +125,7 @@ export default class Feed extends React.Component {
             Only showing the most recent {this.state.messages.length} messages.
           </Text.p> */}
 
-          <SelectLanguage />
+          <SelectLanguage changeLanguage={this.changeLanguage} />
 
           <Input
             mt={3}
