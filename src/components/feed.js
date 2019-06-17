@@ -57,6 +57,10 @@ export default class Feed extends React.Component {
     Message.addStreamListener(this.newMessageListener.bind(this));
   }
 
+  componentDidUpdate() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   // translateMessage = async message => {
   //   const { language } = this.state;
 
@@ -127,10 +131,12 @@ export default class Feed extends React.Component {
       let author = message.attrs.createdBy;
       return (
         <div key={message._id}>
-          <Text.p mt={4} mb={1}><strong>
-            {author.slice(-14, author.length) === ".id.blockstack"
-              ? author.slice(0, -14)
-              : author}</strong>
+          <Text.p mt={4} mb={1}>
+            <strong>
+              {author.slice(-14, author.length) === ".id.blockstack"
+                ? author.slice(0, -14)
+                : author}
+            </strong>
             :{" "}
             {message.attrs.translation[language]
               ? message.attrs.translation[language]
@@ -148,7 +154,7 @@ export default class Feed extends React.Component {
   render() {
     return (
       <Flex>
-        <Box width={[1, 1]} mx="auto" textAlign="center">
+        <Box width={[1, 1]} mx="auto" textAlign="center" marginBottom="1.5em">
           {/* <Text.p textAlign="center">Create a post:</Text.p> */}
 
           {this.messages()}
