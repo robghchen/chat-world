@@ -172,40 +172,42 @@ export default class Feed extends React.Component {
   render() {
     console.log("createdMessageIDs", this.state.createdMessageIDs);
     return (
-      <Flex>
-        <Box width={[1, 1]} mx="auto" textAlign="center" marginbottom="1.5em">
-          {/* <Text.p textAlign="center">Create a post:</Text.p> */}
+      <div style={{ flex: "3" }}>
+        <Flex>
+          <Box width={[1, 1]} mx="auto" textAlign="center" marginbottom="1.5em">
+            {/* <Text.p textAlign="center">Create a post:</Text.p> */}
 
-          {this.messages()}
+            {this.messages()}
 
-          {/* <Text.p textAlign="center">
+            {/* <Text.p textAlign="center">
             Only showing the most recent {this.state.messages.length} messages.
           </Text.p> */}
 
-          <Input
-            mt={3}
-            width={8 / 10}
-            placeholder="Type a message..."
-            value={this.state.newMessage}
-            onChange={e => this.setState({ newMessage: e.target.value })}
-            onKeyPress={e => {
-              if (e.key === "Enter") {
-                return this.submit();
-              }
-            }}
-          />
+            <Input
+              mt={3}
+              width={7 / 10}
+              placeholder="Type a message..."
+              value={this.state.newMessage}
+              onChange={e => this.setState({ newMessage: e.target.value })}
+              onKeyPress={e => {
+                if (e.key === "Enter") {
+                  return this.submit();
+                }
+              }}
+            />
 
-          <SelectLanguage changeLanguage={this.changeLanguage} />
+            <SelectLanguage changeLanguage={this.changeLanguage} />
 
-          <Button
-            style={{ marginTop: "-0.2em", height: "2.5em" }}
-            onClick={() => this.submit()}
-            mt={2}
-          >
-            Submit
-          </Button>
-        </Box>
-      </Flex>
+            <Button
+              style={{ marginTop: "-0.2em", height: "2.5em" }}
+              onClick={() => this.submit()}
+              mt={2}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Flex>
+      </div>
     );
   }
 }

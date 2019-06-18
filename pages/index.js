@@ -144,22 +144,35 @@ class Home extends React.Component {
     return (
       <>
         <Flex>
-          <Box width={[1, 3 / 4]} mx="auto">
+          <Box width={[1, 9 / 10]} mx="auto">
             <Text.h1 textAlign="center">Chat World</Text.h1>
+            <Text.p textAlign="center">Real-time text translation</Text.p>
             {currentUser ? (
               <>
-                <Text.small textAlign="center" display="block">
-                  Logged in as {currentUser.username}
-                  {". "}
-                  <a href="javascript:void(0)" onClick={this.logout}>
-                    Log Out
-                  </a>
-                </Text.small>
-                <Sidebar users={users} />
-                <Feed
-                  messages={messages}
-                  changeLanguage={this.changeLanguage}
-                />
+                <Button
+                  mt={3}
+                  onClick={this.logout}
+                  mx="auto"
+                  style={{
+                    display: "block",
+                    fontSize: "1em",
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: "2em",
+                    right: "5em"
+                  }}
+                >
+                  Log Out
+                </Button>
+                <br />
+                <hr />
+                <div style={{ display: "flex" }}>
+                  <Sidebar users={users} />
+                  <Feed
+                    messages={messages}
+                    changeLanguage={this.changeLanguage}
+                  />
+                </div>
               </>
             ) : (
               <>
