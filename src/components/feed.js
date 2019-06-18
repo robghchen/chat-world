@@ -14,6 +14,8 @@ import Input from "../../styled/input";
 import Message from "../../models/Message";
 
 export default class Feed extends React.Component {
+  _isMounted = false;
+
   static propTypes = {
     messages: PropTypes.array
   };
@@ -33,34 +35,44 @@ export default class Feed extends React.Component {
   };
 
   componentWillMount() {
-    const rawMessages = this.props.messages;
-    const messages = rawMessages.map(message => {
-      return new Message(message.attrs);
-    });
-    this.setState({ messages });
+    this._isMounted = true;
+
+    if (this._isMounted) {
+      const rawMessages = this.props.messages;
+      const messages = rawMessages.map(message => {
+        return new Message(message.attrs);
+      });
+      this.setState({ messages });
+    }
   }
 
   componentDidMount() {
+    this._isMounted = true;
     // const { translated } = this.state;
     const { messages } = this.props;
 
-    this.setState({
-      currentUser: User.currentUser()
-    });
+    if (this._isMounted) {
+      this.setState({
+        currentUser: User.currentUser()
+      });
+
+      Message.addStreamListener(this.newMessageListener.bind(this));
+    }
 
     // if (!translated) {
     //   console.log("translating");
     //   this.setState({ translated: true });
     //   messages.forEach(message => this.translateMessage(message));
     // }
-
-    Message.addStreamListener(this.newMessageListener.bind(this));
   }
 
   componentDidUpdate() {
     window.scrollTo(0, document.body.scrollHeight);
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   // translateMessage = async message => {
   //   const { language } = this.state;
 
@@ -152,10 +164,13 @@ export default class Feed extends React.Component {
   }
 
   changeLanguage = language => {
+    this.props.changeLanguage(language);
+
     this.setState({ language });
   };
 
   render() {
+    console.log("createdMessageIDs", this.state.createdMessageIDs);
     return (
       <Flex>
         <Box width={[1, 1]} mx="auto" textAlign="center" marginbottom="1.5em">

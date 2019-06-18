@@ -2,22 +2,33 @@ import React from "react";
 import { Flex, Box, Button } from "rebass";
 import PropTypes from "prop-types";
 import { User, getConfig } from "radiks";
+import cookie from "react-cookies";
 
 import Text from "../styled/typography";
 import Message from "../models/Message";
+import AppUser from "../models/AppUser";
 import Feed from "../src/components/Feed";
+import Sidebar from "../src/components/Sidebar";
 
 class Home extends React.Component {
+  _isMounted = false;
+
   static propTypes = {
-    messages: PropTypes.array
+    messages: PropTypes.array,
+    users: PropTypes.array
   };
 
   static defaultProps = {
-    messages: []
+    messages: [],
+    users: []
   };
 
   state = {
-    currentUser: null
+    currentUser: null,
+    messages: [],
+    users: [],
+    createdUserIDs: {},
+    language: cookie.load("language")
   };
 
   static async getInitialProps() {
@@ -29,21 +40,81 @@ class Home extends React.Component {
       { decrypt: false }
     );
 
+    const users = await AppUser.fetchList(
+      {
+        sort: "-createdAt",
+        limit: 20
+      },
+      { decrypt: false }
+    );
+
     return {
-      messages
+      messages,
+      users
     };
   }
 
+  componentWillMount() {
+    this.is_Mounted = true;
+
+    if (this._isMounted) {
+      const rawUsers = this.props.users;
+      const users = rawUsers.map(user => {
+        return new User(user.attrs);
+      });
+      this.setState({ users });
+    }
+
+    // console.log("compDidMount", this.props.messages);
+  }
+
   async componentDidMount() {
+    this._isMounted = true;
+
+    if (this._isMounted) {
+      AppUser.addStreamListener(this.newUserListener.bind(this));
+    }
+
     const { userSession } = getConfig();
     if (userSession.isUserSignedIn()) {
       const currentUser = userSession.loadUserData();
       this.setState({ currentUser });
+      if (this._isMounted) {
+        setTimeout(() => this.submitUser(currentUser), 1000);
+      }
     } else if (userSession.isSignInPending()) {
       const currentUser = await userSession.handlePendingSignIn();
       await User.createWithCurrentUser();
       this.setState({ currentUser });
     }
+
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  async newUserListener(user) {
+    const { users } = this.state;
+    if (!this.state.createdUserIDs[user._id]) {
+      users.push(user);
+      this.setState({ users });
+    }
+  }
+
+  async submitUser(currentUser) {
+    const { language } = this.state;
+    const user = new User({
+      username: currentUser.username,
+      online: true,
+      language: language
+    });
+    const { users, createdUserIDs } = this.state;
+    users.push(user);
+    createdUserIDs[user._id] = true;
+    this.setState({ users, createdUserIDs });
+    await user.save();
   }
 
   login = () => {
@@ -59,8 +130,17 @@ class Home extends React.Component {
     });
   };
 
+  changeLanguage = language => {
+    this.setState({ language });
+  };
+
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, users } = this.state;
+    const { messages } = this.props;
+
+    messages.sort((a, b) => a.attrs.createdAt - b.attrs.createdAt);
+
+    console.log("createdUserIDs", this.state.createdUserIDs);
     return (
       <>
         <Flex>
@@ -75,10 +155,10 @@ class Home extends React.Component {
                     Log Out
                   </a>
                 </Text.small>
+                <Sidebar users={users} />
                 <Feed
-                  messages={this.props.messages.sort(
-                    (a, b) => a.attrs.createdAt - b.attrs.createdAt
-                  )}
+                  messages={messages}
+                  changeLanguage={this.changeLanguage}
                 />
               </>
             ) : (
