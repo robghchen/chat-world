@@ -87,15 +87,19 @@ export default class Feed extends React.Component {
       message.attrs.language !== language &&
       !message.attrs.translation[language]
     ) {
-      message.attrs.translation[language] = await translate(
-        message.attrs.content,
-        {
-          from: message.attrs.language,
-          to: language,
-          key: apiKey
-        }
-      );
-      await message.save();
+      try {
+        message.attrs.translation[language] = await translate(
+          message.attrs.content,
+          {
+            from: message.attrs.language,
+            to: language,
+            key: apiKey
+          }
+        );
+        await message.save();
+      } catch (err) {
+        alert(err); // TypeError: failed to fetch
+      }
     } else {
       this.pushMessage(message);
     }
@@ -154,7 +158,7 @@ export default class Feed extends React.Component {
   render() {
     return (
       <Flex>
-        <Box width={[1, 1]} mx="auto" textAlign="center" marginBottom="1.5em">
+        <Box width={[1, 1]} mx="auto" textAlign="center" marginbottom="1.5em">
           {/* <Text.p textAlign="center">Create a post:</Text.p> */}
 
           {this.messages()}
