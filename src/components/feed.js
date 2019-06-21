@@ -31,7 +31,6 @@ export default class Feed extends React.Component {
     currentUser: null,
     languageCodes: langCodes,
     language: cookie.load("language")
-    // translated: false
   };
 
   componentWillMount() {
@@ -48,8 +47,6 @@ export default class Feed extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    // const { translated } = this.state;
-    const { messages } = this.props;
 
     if (this._isMounted) {
       this.setState({
@@ -58,12 +55,6 @@ export default class Feed extends React.Component {
 
       Message.addStreamListener(this.newMessageListener.bind(this));
     }
-
-    // if (!translated) {
-    //   console.log("translating");
-    //   this.setState({ translated: true });
-    //   messages.forEach(message => this.translateMessage(message));
-    // }
   }
 
   componentDidUpdate() {
@@ -73,24 +64,6 @@ export default class Feed extends React.Component {
   componentWillUnmount() {
     this._isMounted = false;
   }
-  // translateMessage = async message => {
-  //   const { language } = this.state;
-
-  //   if (
-  //     message.attrs.language !== language &&
-  //     !message.attrs.translation[language]
-  //   ) {
-  //     message.attrs.translation[language] = await translate(
-  //       message.attrs.content,
-  //       {
-  //         from: message.attrs.language,
-  //         to: language,
-  //         key: apiKey
-  //       }
-  //     );
-  //     await message.save();
-  //   }
-  // };
 
   async newMessageListener(message) {
     const { language } = this.state;
@@ -110,7 +83,7 @@ export default class Feed extends React.Component {
         );
         await message.save();
       } catch (err) {
-        alert(err); // TypeError: failed to fetch
+        alert(err);
       }
     } else {
       this.pushMessage(message);
@@ -148,6 +121,10 @@ export default class Feed extends React.Component {
       return (
         <div key={message._id}>
           <Text.p mt={4} mb={1}>
+            <img
+              src={`./assets/flags/${author.language}.png`}
+              alt={author.language}
+            />{" "}
             <strong>
               {author.slice(-14, author.length) === ".id.blockstack"
                 ? author.slice(0, -14)
@@ -170,7 +147,6 @@ export default class Feed extends React.Component {
   };
 
   render() {
-    console.log("createdMessageIDs", this.state.createdMessageIDs);
     return (
       <div style={{ flex: "3" }}>
         <Flex>

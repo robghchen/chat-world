@@ -65,13 +65,14 @@ class Home extends React.Component {
       this.setState({ users });
     }
 
-    // console.log("compDidMount", this.props.messages);
+    // console.log("compWillMount users", this.props.users); // props is empty
   }
 
   async componentDidMount() {
     this._isMounted = true;
 
     if (this._isMounted) {
+      // console.log("compDidMount addStreamListener");
       AppUser.addStreamListener(this.newUserListener.bind(this));
     }
 
@@ -89,6 +90,7 @@ class Home extends React.Component {
     }
 
     window.scrollTo(0, document.body.scrollHeight);
+    // console.log("compDidMount users", this.state.users);
   }
 
   componentWillUnmount() {
@@ -97,10 +99,12 @@ class Home extends React.Component {
 
   async newUserListener(user) {
     const { users } = this.state;
-    if (!this.state.createdUserIDs[user._id]) {
-      users.push(user);
-      this.setState({ users });
-    }
+    // if (!this.state.createdUserIDs[user._id]) {
+    users.push(user);
+    this.setState({ users });
+    // }
+
+    console.log("newUserListener users", this.state.users); // this is not getting invoked
   }
 
   async submitUser(currentUser) {
@@ -115,6 +119,8 @@ class Home extends React.Component {
     createdUserIDs[user._id] = true;
     this.setState({ users, createdUserIDs });
     await user.save();
+
+    // console.log("submitUser users", this.state.users);
   }
 
   login = () => {
@@ -140,7 +146,6 @@ class Home extends React.Component {
 
     messages.sort((a, b) => a.attrs.createdAt - b.attrs.createdAt);
 
-    console.log("createdUserIDs", this.state.createdUserIDs);
     return (
       <>
         <Flex>
@@ -156,10 +161,7 @@ class Home extends React.Component {
                   style={{
                     display: "block",
                     fontSize: "1em",
-                    cursor: "pointer",
-                    position: "absolute",
-                    top: "2em",
-                    right: "5em"
+                    cursor: "pointer"
                   }}
                 >
                   Log Out

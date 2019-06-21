@@ -30,6 +30,10 @@ class SelectLanguage extends Component {
         >
           {languageCodes.map(lang => (
             <option key={lang.language} value={lang.language}>
+              <img
+                src={`./assets/flags/${lang.language}.png`}
+                alt={lang.language}
+              />{" "}
               {lang.name}
             </option>
           ))}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Realtime text translation",
   "main": "index.js",
-  "author": "Hank Stoever",
+  "author": "Hank Stoever, Robert Chen",
   "license": "MIT",
   "dependencies": {
     "blockstack": "19.0.0",
