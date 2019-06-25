@@ -9,7 +9,7 @@
     "node": ">= 8.0.0"
   },
   "scripts": {
-    "dev": "NODE_ENV=development node server",
+    "dev": "next",
     "build": "next build",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node server.js"
