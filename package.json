@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Hank Stoever, Robert Chen",
   "license": "MIT",
+  "engines": {
+    "node": ">= 8.0.0"
+  },
   "scripts": {
     "dev": "NODE_ENV=development node server",
     "build": "next build",
