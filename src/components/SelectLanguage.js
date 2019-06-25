@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import cookie from "react-cookies";
-import { parse } from "querystring";
 
 import { langCodes } from "../utils/translate";
 
@@ -29,11 +26,13 @@ class SelectLanguage extends Component {
           onChange={e => this.changeHandler(e.target.value)}
         >
           {languageCodes.map(lang => (
-            <option key={lang.language} value={lang.language}>
-              <img
-                src={`./assets/flags/${lang.language}.png`}
-                alt={lang.language}
-              />{" "}
+            <option
+              key={lang.language}
+              value={lang.language}
+              style={{
+                backgroundImage: `url("/assets/flags/${lang.language}.png")`
+              }}
+            >
               {lang.name}
             </option>
           ))}

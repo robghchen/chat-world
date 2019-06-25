@@ -122,7 +122,7 @@ export default class Feed extends React.Component {
         <div key={message._id}>
           <Text.p mt={4} mb={1}>
             <img
-              src={`./assets/flags/${author.language}.png`}
+              src={`/assets/flags/${author.language}.png`}
               alt={author.language}
             />{" "}
             <strong>

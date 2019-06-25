@@ -14,7 +14,7 @@ const Sidebar = ({ users }) => (
         return (
           <li key={author}>
             <img
-              src={`./assets/flags/${author.language}.png`}
+              src={`/assets/flags/${author.language}.png`}
               alt={author.language}
             />{" "}
             {author.slice(-14, author.length) === ".id.blockstack"
