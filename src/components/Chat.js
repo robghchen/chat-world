@@ -13,7 +13,7 @@ import Text from "../../styled/typography";
 import Input from "../../styled/input";
 import Message from "../../models/Message";
 
-export default class Feed extends React.Component {
+export default class Chat extends React.Component {
   _isMounted = false;
 
   static propTypes = {

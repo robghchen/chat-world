@@ -7,7 +7,7 @@ import cookie from "react-cookies";
 import Text from "../styled/typography";
 import Message from "../models/Message";
 import AppUser from "../models/AppUser";
-import Feed from "../src/components/Feed";
+import Chat from "../src/components/Chat";
 import Sidebar from "../src/components/Sidebar";
 
 class Home extends React.Component {
@@ -170,7 +170,7 @@ class Home extends React.Component {
                 <hr />
                 <div style={{ display: "flex" }}>
                   <Sidebar users={users} />
-                  <Feed
+                  <Chat
                     messages={messages}
                     changeLanguage={this.changeLanguage}
                   />
