@@ -6,7 +6,7 @@
   "author": "Hank Stoever, Robert Chen",
   "license": "MIT",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "NODE_ENV=development node server",
     "build": "next build",
     "heroku-postbuild": "next build",
     "start": "NODE_ENV=production node server.js"
