@@ -5,6 +5,12 @@
   "main": "index.js",
   "author": "Hank Stoever, Robert Chen",
   "license": "MIT",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "heroku-postbuild": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
   "dependencies": {
     "blockstack": "19.0.0",
     "dotenv": "^6.0.0",
@@ -53,10 +59,5 @@
       "components/*",
       "styled/*"
     ]
-  },
-  "scripts": {
-    "dev": "node server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js"
   }
 }
