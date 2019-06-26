@@ -1,4 +1,7 @@
-export const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
+import { config } from "../../config";
+
+// export const apiKey = process.env.GOOGLE_TRANSLATE_API_KEY;
+export const apiKey = config.GOOGLE_TRANSLATE_API_KEY;
 
 export const langCodes = [
   { language: "af", name: "Afrikaans" },

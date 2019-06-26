@@ -121,10 +121,10 @@ export default class Chat extends React.Component {
       return (
         <div key={message._id}>
           <Text.p mt={4} mb={1}>
-            <img
+            {/* <img
               src={`/assets/flags/${author.language}.png`}
               alt={author.language}
-            />{" "}
+            />{" "} */}
             <strong>
               {author.slice(-14, author.length) === ".id.blockstack"
                 ? author.slice(0, -14)

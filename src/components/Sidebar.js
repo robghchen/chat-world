@@ -13,10 +13,10 @@ const Sidebar = ({ users }) => (
         const author = user.attrs.username;
         return (
           <li key={author}>
-            <img
+            {/* <img
               src={`/assets/flags/${author.language}.png`}
               alt={author.language}
-            />{" "}
+            />{" "} */}
             {author.slice(-14, author.length) === ".id.blockstack"
               ? author.slice(0, -14)
               : author}{" "}
