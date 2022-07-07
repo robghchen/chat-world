@@ -21,7 +21,7 @@
     "express-ws": "^4.0.0",
     "fs": "^0.0.1-security",
     "grid-styled": "^5.0.2",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "net": "^1.0.2",
     "next": "^8.0.0",
     "polished": "^2.1.1",
