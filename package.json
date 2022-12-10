@@ -17,7 +17,7 @@
   "dependencies": {
     "blockstack": "19.0.0",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "express-ws": "^4.0.0",
     "fs": "^0.0.1-security",
     "grid-styled": "^5.0.2",
